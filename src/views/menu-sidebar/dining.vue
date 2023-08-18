@@ -1,0 +1,7 @@
+<template>
+  <div class="font-bold text-[30px]">ที่รับประทานอาหาร</div>
+</template>
+
+<script setup></script>
+
+<style lang="scss" scoped></style>
