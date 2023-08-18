@@ -1,0 +1,12 @@
+<template>
+  <div class="bg-[#F0F2F5] h-full p-[20px] bg-no-repeat  font-Kanit ">
+    <div>
+      <router-view />
+    </div>
+    <ContenEquipment />
+  </div>
+</template>
+
+<script setup>
+import ContenEquipment from "../components/ViewConten/ContenEquipment.vue";
+</script>
