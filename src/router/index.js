@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import back from "../Layouts/back.vue";
 import main from "../Layouts/main.vue";
+import Viewconten from "../Layouts/Viewconten.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -10,14 +11,21 @@ const router = createRouter({
       path: "/",
       name: "home",
       meta: { layout: main },
+      children: [],
+    },
+    {
+      path: "/equipment",
+      name: "equipment",
+      meta: { layout: Viewconten },
       children: [
         {
           path: "/",
-          name: "test",
-          component: () => import("../views/test.vue"),
+          name: "equipment",
+          component: () => import("../Layouts/Viewconten.vue"),
         },
       ],
     },
+    // -------------------------Back------------------------------------
     {
       path: "/back",
       name: "dashboard",
