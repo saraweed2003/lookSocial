@@ -31,8 +31,8 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-12 col-start-4 text-[16px] pt-[5px] ">
-      <div class="col-start-4 col-span-6 grid grid-cols-12 ">
+    <div class="grid grid-cols-12 col-start-4 text-[16px] pt-[5px]">
+      <div class="col-start-4 col-span-6 grid grid-cols-12">
         <div class="col-span-3 grid grid-cols-3 py-2">
           <div class="font-bold">สถานที่</div>
           <select class="col-span-2">
@@ -62,5 +62,4 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>

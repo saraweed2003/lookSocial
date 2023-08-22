@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F0F2F5] w-screen p-[10px] bg-no-repeat h-screen font-Kanit">
+  <div class="bg-[#F0F2F5] w-full p-[10px] bg-no-repeat h-screen font-Kanit">
     <div>
       <HeaderLook1 />
     </div>
@@ -11,5 +11,25 @@
 
 <script setup>
 import HeaderLook1 from "../components/main/HeaderLook.vue";
-import bodyLook2 from "../views/BodyConten.vue";
+import bodyLook2 from "../views/Contenhome/BodyConten.vue";
 </script>
+<style>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #184bce;
+  border-radius: 0.375rem;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #184bce;
+  border-radius: 0.375rem;
+}
+</style>
