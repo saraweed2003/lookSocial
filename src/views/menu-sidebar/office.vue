@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-[30px]">ห้องทำงาน</div>
+  <div class="font-bold text-[20px]">ห้องทำงาน</div>
 </template>
 
 <script setup></script>

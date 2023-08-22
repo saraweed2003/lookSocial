@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 
 const isOpen = ref();
 const activeClass = ref(
@@ -8,6 +8,25 @@ const activeClass = ref(
 const inactiveClass = ref(
   "border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
 );
+
+const state = reactive({
+  activeButton: null,
+  activeText: null,
+});
+const handleButtonClick = (buttonNumber) => {
+  state.activeButton = buttonNumber;
+  localStorage.setItem("activeButton", buttonNumber);
+};
+const isButtonActive = (buttonNumber) => {
+  return state.activeButton === buttonNumber;
+};
+
+onMounted(() => {
+  const storedButton = localStorage.getItem("activeButton");
+  if (storedButton) {
+    state.activeButton = parseInt(storedButton);
+  }
+});
 </script>
 
 <template>
@@ -24,6 +43,7 @@ const inactiveClass = ref(
       :class="isOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
       class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-white lg:translate-x-0 lg:static lg:inset-0"
     >
+      <!------------------------------------------------------------------ Logo ------------------------------------------------------------------>
       <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
           <svg
@@ -46,62 +66,116 @@ const inactiveClass = ref(
         </div>
       </div>
 
-      <nav class="mt-10">
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          to="/dashboard"
+      <!----------------------------------------------------------------- Navbar ----------------------------------------------------------------->
+      <div class="">
+        <nav
+          class="mt-10 px-[10px] border-y overflow-y-auto min-h-[80vh] custom-scrollbar"
         >
-          <span class="mx-4">Dashboard</span>
-        </router-link>
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(1) }"
+            @click="handleButtonClick(1), (isOpen = !isOpen)"
+            to="/dashboard"
+          >
+            <span class="mx-4">หน้าหลัก</span>
+          </router-link>
 
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'storage' ? activeClass : inactiveClass]"
-          to="/storage"
-        >
-          <span class="mx-4">Storage</span>
-        </router-link>
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(2) }"
+            @click="handleButtonClick(2), (isOpen = !isOpen)"
+            to="/storage"
+          >
+            <span class="mx-4">ห้องเก็บของ</span>
+          </router-link>
 
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'MeetingRoom' ? activeClass : inactiveClass]"
-          to="/meeting_room"
-        >
-          <span class="mx-4">Meeting</span>
-        </router-link>
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(3) }"
+            @click="handleButtonClick(3), (isOpen = !isOpen)"
+            to="/meeting_room"
+          >
+            <span class="mx-4">ห้องประชุม</span>
+          </router-link>
 
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Forms' ? activeClass : inactiveClass]"
-          to="/office"
-        >
-          <span class="mx-4">Forms</span>
-        </router-link>
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(4) }"
+            @click="handleButtonClick(4), (isOpen = !isOpen)"
+            to="/office"
+          >
+            <span class="mx-4">ห้องทำงาน</span>
+          </router-link>
 
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Cards' ? activeClass : inactiveClass]"
-          to="/parking"
-        >
-          <span class="mx-4">Cards</span>
-        </router-link>
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(5) }"
+            @click="handleButtonClick(5), (isOpen = !isOpen)"
+            to="/parking"
+          >
+            <span class="mx-4">ที่จอดรถ</span>
+          </router-link>
 
-        <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Modal' ? activeClass : inactiveClass]"
-          to="/restaurant"
-        >
-          <span class="mx-4">Modal</span>
-        </router-link>
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(6) }"
+            @click="handleButtonClick(6), (isOpen = !isOpen)"
+            to="/restaurant"
+          >
+            <span class="mx-4">ร้านอาหาร</span>
+          </router-link>
 
+          <router-link
+            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+            :class="{ active: isButtonActive(7) }"
+            @click="handleButtonClick(7), (isOpen = !isOpen)"
+            to="/dining_place"
+          >
+            <span class="mx-4">ที่รับประทานอาหาร</span>
+          </router-link>
+        </nav>
+      </div>
+
+      <!--------------------------------------------------------------- Category ----------------------------------------------------------------->
+      <div class="p-[10px]">
         <router-link
-          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Blank' ? activeClass : inactiveClass]"
-          to="/dining_place"
+          to="/category"
+          class="bg-white flex items-center space-x-4 px-10 py-2 fill-black hover:fill-white hover:bg-[#184BCE] hover:text-white rounded-[5px]"
         >
-          <span class="mx-4">Blank</span>
+          <svg
+            class="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            height="0.875em"
+            viewBox="0 0 448 512"
+          >
+            <path
+              d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+            />
+          </svg>
+          <span class="text-[20px]">เพิ่มหมวดหมู่</span>
         </router-link>
-      </nav>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.active {
+  background-color: #184bce;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
+.button-style {
+  display: inline-block;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.button-style:hover {
+  background-color: #184bce;
+  color: white;
+}
+</style>

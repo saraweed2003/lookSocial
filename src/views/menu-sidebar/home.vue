@@ -1,5 +1,9 @@
+<script setup>
+import userData from "../../components/dashboard/user-data.vue";
+</script>
+
 <template>
-  <div class="font-bold text-[30px]">หน้าหลัก</div>
+  <div class="font-bold text-[20px]">หน้าหลัก</div>
   <div class="grid grid-cols-12 col-span-12 gap-4 pt-[20px]">
     <div
       class="col-span-3 px-[10px] py-[10px] bg-white border-l-[10px] border-[#1BBE0D] rounded-md flex items-center"
@@ -115,7 +119,7 @@
   </div>
 
   <div class="grid grid-cols-12 gap-4">
-    <div class="col-span-12">
+    <div class="col-span-12 rounded-lg">
       <userData />
     </div>
     <!-- <div class="col-span-6">
@@ -123,9 +127,5 @@
     </div> -->
   </div>
 </template>
-
-<script setup>
-import userData from "../../components/dashboard/user-data.vue";
-</script>
 
 <style lang="scss" scoped></style>

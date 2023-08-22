@@ -66,6 +66,12 @@ const router = createRouter({
           name: "dining_place",
           component: () => import("../views/menu-sidebar/dining.vue"),
         },
+
+        {
+          path: "/category",
+          name: "category",
+          component: () => import("../views/menu-sidebar/category.vue"),
+        },
       ],
     },
   ],

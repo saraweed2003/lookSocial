@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-[20px]">ห้องเก็บของ</div>
+  <div class="font-bold text-[20px]">เพิ่มหมวดหมู่</div>
 </template>
 
 <script setup></script>

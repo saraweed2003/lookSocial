@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-[30px]">ที่จอดรถ</div>
+  <div class="font-bold text-[20px]">ที่จอดรถ</div>
 </template>
 
 <script setup></script>
