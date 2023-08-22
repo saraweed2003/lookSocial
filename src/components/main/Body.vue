@@ -36,25 +36,26 @@
         <div class="col-span-3 grid grid-cols-3 py-2">
           <div class="font-bold">สถานที่</div>
           <select class="col-span-2">
-            <option value="">ทั้งหมด</option>
-            <option value="">ทั้งหมด</option>
-            <option value="">ทั้งหมด</option>
+            <option value="" hidden>ทั้งหมด</option>
+            <option value="">ออฟฟิศ</option>
+            <option value="">ห้องเก็บของ</option>
+          
           </select>
         </div>
         <div class="col-span-3 grid grid-cols-3 pl-[10px] py-2">
           <div class="font-bold">อุปกรณ์</div>
           <select class="col-span-2">
-            <option value="">ทั้งหมด</option>
-            <option value="">ทั้งหมด</option>
-            <option value="">ทั้งหมด</option>
+            <option value="" hidden>ทั้งหมด</option>
+            <option value="">คอมพิวเตอร์</option>
+            <option value="">โต๊ะ</option>
           </select>
         </div>
         <div class="col-span-3 grid grid-cols-3 pl-[10px] py-2">
           <div class="font-bold">แบรนด์</div>
           <select class="col-span-2">
-            <option value="">ทั้งหมด</option>
-            <option value="">ทั้งหมด</option>
-            <option value="">ทั้งหมด</option>
+            <option value="" hidden>ทั้งหมด</option>
+            <option value="">LG</option>
+            <option value="">AOC</option>
           </select>
         </div>
       </div>

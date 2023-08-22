@@ -8,7 +8,11 @@
             <div class="grid grid-cols-4">
               <div class="py-[25px] px-[40px] col-span-2">
                 <div v-for="(product, index) in products" :key="product.id">
-                  <img v-if="index === 5" :src="product.image" class="w-full h-[110px]"/>
+                  <img
+                    v-if="index === 5"
+                    :src="product.image"
+                    class="w-full h-[110px]"
+                  />
                 </div>
               </div>
               <div
@@ -102,7 +106,11 @@
             <div class="grid grid-cols-4">
               <div class="py-[25px] px-[40px] col-span-2">
                 <div v-for="(product, index) in products" :key="product.id">
-                  <img v-if="index === 5" :src="product.image" class="w-full h-[110px]"/>
+                  <img
+                    v-if="index === 5"
+                    :src="product.image"
+                    class="w-full h-[110px]"
+                  />
                 </div>
               </div>
               <div
@@ -189,13 +197,17 @@
         </div>
       </div>
       <!--  --------------------------------------------------------------------------->
-      <div class=" col-span-2">
+      <div class="col-span-2">
         <div class="bg-[#FFFFFF] h-[400px] rounded-[8px]">
           <div class="bg-[#184BCE] relative shadow-2xl rounded-[8px] h-[160px]">
             <div class="grid grid-cols-4">
               <div class="py-[25px] px-[40px] col-span-2">
                 <div v-for="(product, index) in products" :key="product.id">
-                  <img v-if="index === 9" :src="product.image" class="w-full h-[110px]"/>
+                  <img
+                    v-if="index === 9"
+                    :src="product.image"
+                    class="w-full h-[110px]"
+                  />
                 </div>
               </div>
               <div
