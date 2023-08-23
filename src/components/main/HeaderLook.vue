@@ -29,9 +29,9 @@
           <select
             class="w-full rounded-lg border border-[#909090] text-[18px] py-[5px] pl-[14px]"
           >
-            <option value="">พี่คิว</option>
-            <option value="">พี่คิว</option>
-            <option value="">พี่คิว</option>
+            <option value="">พี่Q</option>
+            <option value="">พี่A</option>
+            <option value="">พี่B</option>
           </select>
         </div>
         <div class="py-[15px] col-span-2">

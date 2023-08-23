@@ -30,16 +30,17 @@
               <div class="col-span-4 justify-self-end">ผู้ใช้:</div>
               <div class="col-span-7">
                 <select class="border w-full p-[3px]">
-                  <option value="">123</option>
-                  <option value="">456</option>
-                  <option value="">789</option>
-                  <option value="">1011</option>
+                  <option value="" class="" hidden>กรุณาเลือกชื่อผู้ใช้</option>
+                  <option value="">พี่Q</option>
+                  <option value="">พี่A</option>
+                  <option value="">พี่B</option>
+                  <option value="">พี่C</option>
                 </select>
               </div>
               <div class="col-span-4 justify-self-end">สถานที่:</div>
               <div class="col-span-7">
                 <select class="border w-full p-[3px]">
-                  <option value="">123</option>
+                  <option value="" hidden>กรุณาเลือกสถานที่</option>
                   <option value="">456</option>
                   <option value="">789</option>
                   <option value="">1011</option>
@@ -48,7 +49,7 @@
               <div class="col-span-4 justify-self-end">แบรนด์:</div>
               <div class="col-span-7">
                 <select class="border w-full p-[3px]">
-                  <option value="">123</option>
+                  <option value="" hidden>กรุณาเลือกแบรนด์</option>
                   <option value="">456</option>
                   <option value="">789</option>
                   <option value="">1011</option>
