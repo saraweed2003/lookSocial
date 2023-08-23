@@ -529,7 +529,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-12">
+    <div class="grid grid-cols-12" >
       <div class="col-span-2">
         <div class="grid grid-cols-5">
           <div class="col-span-4">
@@ -563,7 +563,7 @@
                 <div class="py-[7px] pl-[20px] text-center text-[20px]">
                   ปลั๊กสามตา
                 </div>
-                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน: ปีใหม่</div>
+                <div class="py-[7px] pl-[20px]" v-if="selectedViweitem">ผู้ใช้งาน: {{ selectedViweitem.title }}</div>
                 <div class="py-[7px] pl-[20px]">สถานที่: ห้องทำงาน</div>
                 <div class="py-[7px] pl-[20px]">แบรนด์: LC</div>
                 <div class="py-[7px] pl-[20px]">รายละเอียด: ตำแหน่ง</div>
@@ -581,13 +581,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref, computed  } from "vue";
+import { useStore } from 'vuex';
 
 const status = ref(0);
+const store = useStore();
 
 import ModaladdEquipment from "../topmodalhome/Modalhome.vue";
 
+const selectedViweitem = computed(() => store.getters.getSelecteviweitem);
+console.log(selectedViweitem);
 const emits = defineEmits(["close"]);
 
 const openModaladd = () => {
@@ -598,6 +601,7 @@ const ModaladdEquipmentClose = () => {
   emits("close");
   emits("ModaladdEquipmentClose");
 };
+
 
 </script>
 <style scoped>
