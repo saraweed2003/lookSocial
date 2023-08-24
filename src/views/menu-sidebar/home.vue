@@ -1,5 +1,5 @@
 <script setup>
-import userData from "../../components/dashboard/user-data.vue";
+import userData from "../../components/data-sidebar/user-data.vue";
 </script>
 
 <template>
