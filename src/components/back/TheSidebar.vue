@@ -141,6 +141,8 @@ onMounted(() => {
         <router-link
           to="/category"
           class="bg-white flex items-center space-x-4 px-10 py-2 fill-black hover:fill-white hover:bg-[#184BCE] hover:text-white rounded-[5px]"
+          :class="{ active: isButtonActive(10) }"
+          @click="handleButtonClick(10), (isOpen = !isOpen)"
         >
           <svg
             class="h-6 w-6"
@@ -164,6 +166,7 @@ onMounted(() => {
   background-color: #184bce;
   border-radius: 5px;
   color: #ffffff;
+  fill: white;
 }
 
 .button-style {
