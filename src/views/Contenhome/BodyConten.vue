@@ -223,6 +223,9 @@
         </div>
       </div>
     </div>
+    <div v-for="testapis in testapi" :key="testapis.id">
+      {{ testapis }}
+    </div>
   </div>
 </template>
 
@@ -238,12 +241,25 @@ import { items } from "./itemsHome";
 console.log(items);
 const store = useStore();
 
+const testapi = ref([]);
 const products = ref([]);
 const showInput = ref(false);
 
 const updateProductTitle = (index, newTitle) => {
   products.value[index].title = newTitle;
 };
+
+onMounted(async () => {
+  try {
+    const response = await axios.get(
+      "https://padmeexii.pythonanywhere.com/api/asset/"
+    );
+    testapi.value = response;
+    console.log("123", products.value);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+});
 
 const newProductTitle = ref("");
 
