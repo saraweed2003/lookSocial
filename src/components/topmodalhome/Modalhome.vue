@@ -29,13 +29,11 @@
           <div class="grid grid-cols-12 gap-2.5">
             <div class="col-span-4 justify-self-end">ผู้ใช้:</div>
             <div class="col-span-7">
-              <select class="border w-full p-[3px]">
-                <option value="" class="" hidden>กรุณาเลือกชื่อผู้ใช้</option>
-                <option value="">พี่Q</option>
-                <option value="">พี่A</option>
-                <option value="">พี่B</option>
-                <option value="">พี่C</option>
-              </select>
+              <input
+                value=""
+                placeholder="กรอกชื่อผู้ใช้"
+                class="border w-full p-[3px]"
+              />
             </div>
             <div class="col-span-4 justify-self-end">สถานที่:</div>
             <div class="col-span-7">
@@ -83,11 +81,10 @@
             <div class="col-span-7">
               <div>
                 <a-date-picker
-                  style="width: 100%;"
+                  style="width: 100%"
                   :format="formatDate"
                   placeholder="เลือกวัน"
                   :locale="locale"
-                  
                 />
               </div>
             </div>
@@ -158,14 +155,13 @@ function getBase64(file) {
 
 function formatDate(dateString) {
   const options = {
-    day: "2-digit", 
-    month: "2-digit", 
+    day: "2-digit",
+    month: "2-digit",
     year: "numeric",
   };
   const date = new Date(dateString);
   return date.toLocaleString("en-UK", options);
 }
-
 
 const previewVisible = ref(false);
 const previewImage = ref("");

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F0F2F5] w-full p-[10px] bg-no-repeat h-screen font-Kanit">
+  <div class=" w-full p-[10px] bg-no-repeat h-screen font-Kanit">
     <div>
       <HeaderLook1 />
     </div>

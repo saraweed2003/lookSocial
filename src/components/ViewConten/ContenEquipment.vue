@@ -133,7 +133,7 @@
     </div>
   </div>
   <div class="border-[#CFCFCF] border-b"></div>
-  <div class="text-[30px] pt-[10px]">{{ selectedViweitem.name }}</div>
+  <div class="text-[30px] pt-[10px]">{{ selectedViweitem.category.name }}</div>
   <!-- ---------------------------- -->
 
   <div class="">
@@ -196,7 +196,7 @@
 
     <div class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center">
       <div
-        class="col-span-2"
+        class="col-span-2 drop-shadow-xl pb-5"
         v-for="prodselectedViweitemsuct in selectedViweitem.type"
         :key="prodselectedViweitemsuct.id"
       >
@@ -224,7 +224,7 @@
       v-for="(img, index) in selectedViweitem.type"
       :key="index"
     >
-      <img :src="img.img" alt="Image" />
+      <img :src="img.image" alt="Image" />
     </div>
 
                 <div class="py-[7px] pl-[20px]">
