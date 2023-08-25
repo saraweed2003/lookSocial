@@ -133,10 +133,10 @@
     </div>
   </div>
   <div class="border-[#CFCFCF] border-b"></div>
-  <div class="text-[30px] pt-[10px]">สายพ่วง</div>
+  <div class="text-[30px] pt-[10px]">{{ selectedViweitem.name }}</div>
   <!-- ---------------------------- -->
 
-  <div>
+  <div class="">
     <div class="grid grid-cols-11 justify-items-center">
       <div class="col-start-6 pb-[10px]">
         <div class="">
@@ -194,61 +194,66 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-12">
-      <div class="col-span-2">
-        <div class="grid grid-cols-5">
+    <div class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center">
+      <div
+        class="col-span-2"
+        v-for="prodselectedViweitemsuct in selectedViweitem.type"
+        :key="prodselectedViweitemsuct.id"
+      >
+        <div class="grid grid-cols-4">
           <div class="col-span-4">
-            <div class="bg-[#FFFFFF] h-[400px] px-[15px] py-[15px]">
-              <div class="bg-[#CFCFCF] px-[50px] py-[35px]">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 87 82"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="86"
-                    height="80.3137"
-                    fill="white"
-                    stroke="#B6B6B6"
-                  />
-                  <path
-                    d="M34.6863 40.3726H52.8824M43.7843 31.2745V49.4706"
-                    stroke="#B6B6B6"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <div class="overflow-auto h-[200px] custom-scrollbar">
-                <div class="py-[7px] pl-[20px] text-center text-[20px]">
-                  ปลั๊กสามตา
-                </div>
-                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน: ปีใหม่</div>
-                <div class="py-[7px] pl-[20px]">สถานที่: ห้องทำงาน</div>
-                <div class="py-[7px] pl-[20px]">แบรนด์: LC</div>
-                <div class="py-[7px] pl-[20px]">รายละเอียด: ตำแหน่ง</div>
-                <div class="py-[7px] pl-[20px] grid grid-cols-8">
-                  <div class="col-span-2">ร้านค้า:</div>
-                  <div class="col-span-3">
-                    <div class="long-name">shopee123</div>
+            <div class="bg-[#FFFFFF] w-full h-full px-[15px] py-[15px]">
+              <div class="bg-[#FFFFFF]">
+                <a-carousel arrows dots-class="slick-dots slick-thumb">
+                  <template #customPaging="props">
+                    <a>
+                      <img :src="getImgUrl(props.i)" />
+                    </a>
+                  </template>
+                  <div v-for="item in 4" :key="item">
+                    <img :src="getImgUrl(item - 1)" />
                   </div>
-
-                  <a
-                    href="https://shopee.co.th/flash_sale?utm_campaign=-&utm_content=GAV----&utm_medium=affiliates&utm_source=an_15244020000&utm_term=9r9i7m6zx56w"
-                    target="_blank"
-                    class="col-span-2"
-                  >
-                    <div class="text-[#184BCE] pl-[10px]">คลิก</div>
-                  </a>
+                </a-carousel>
+              </div>
+              <div class="overflow-auto h-[170px] custom-scrollbar">
+                <div class="py-[7px] pl-[20px] text-center text-[20px]">
+                  {{ prodselectedViweitemsuct.name }}
                 </div>
+                <div
+      class="py-[7px] pl-[20px] text-center text-[20px]"
+      v-for="(img, index) in selectedViweitem.type"
+      :key="index"
+    >
+      <img :src="img.img" alt="Image" />
+    </div>
 
-                <div class="py-[7px] pl-[20px]">วันที่ซื้อ: 15/05/2023</div>
-                <div class="py-[7px] pl-[20px]">ราคา:1,500 บาท</div>
+                <div class="py-[7px] pl-[20px]">
+                  ผู้ใช้งาน: {{ prodselectedViweitemsuct.user }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  สถานที่: {{ prodselectedViweitemsuct.location }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  แบรนด์: {{ prodselectedViweitemsuct.brand }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  รายละเอียด: {{ prodselectedViweitemsuct.comment }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  ร้านค้า: {{ prodselectedViweitemsuct.shop }}
+                  <a
+                    target="_blank"
+                    class="text-blue-500"
+                    :href="prodselectedViweitemsuct.shopurl"
+                    >คลิก</a
+                  >
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  วันที่ซื้อ: {{ prodselectedViweitemsuct.datebuy }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  ราคา:{{ prodselectedViweitemsuct.price }}
+                </div>
               </div>
             </div>
           </div>
@@ -314,54 +319,6 @@
         </div>
       </div>
     </div>
-
-    <div class="grid grid-cols-12">
-      <div class="col-span-2">
-        <div class="grid grid-cols-5">
-          <div class="col-span-4">
-            <div class="bg-[#FFFFFF] h-[400px] px-[15px] py-[15px]">
-              <div class="bg-[#CFCFCF] px-[50px] py-[35px]">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 87 82"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="86"
-                    height="80.3137"
-                    fill="white"
-                    stroke="#B6B6B6"
-                  />
-                  <path
-                    d="M34.6863 40.3726H52.8824M43.7843 31.2745V49.4706"
-                    stroke="#B6B6B6"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <div class="overflow-auto h-[200px] custom-scrollbar">
-                <div class="py-[7px] pl-[20px] text-center text-[20px]">
-                  ปลั๊กสามตา
-                </div>
-                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน: ปีใหม่</div>
-                <div class="py-[7px] pl-[20px]">สถานที่: ห้องทำงาน</div>
-                <div class="py-[7px] pl-[20px]">แบรนด์: LC</div>
-                <div class="py-[7px] pl-[20px]">รายละเอียด: ตำแหน่ง</div>
-                <div class="py-[7px] pl-[20px]">ร้านค้า: Shopee คลิก</div>
-                <div class="py-[7px] pl-[20px]">วันที่ซื้อ: 15/05/2023</div>
-                <div class="py-[7px] pl-[20px]">ราคา:1,500 บาท</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
   <!-- ---------------------------- -->
 
@@ -419,54 +376,6 @@
               fill="#CFCFCF"
             />
           </svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-12">
-      <div class="col-span-2">
-        <div class="grid grid-cols-5">
-          <div class="col-span-4">
-            <div class="bg-[#FFFFFF] h-[400px] px-[15px] py-[15px]">
-              <div class="bg-[#CFCFCF] px-[50px] py-[35px]">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 87 82"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="86"
-                    height="80.3137"
-                    fill="white"
-                    stroke="#B6B6B6"
-                  />
-                  <path
-                    d="M34.6863 40.3726H52.8824M43.7843 31.2745V49.4706"
-                    stroke="#B6B6B6"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <div class="overflow-auto h-[200px] custom-scrollbar">
-                <div class="py-[7px] pl-[20px] text-center text-[20px]">
-                  ปลั๊กสามตา
-                </div>
-                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน: ปีใหม่</div>
-                <div class="py-[7px] pl-[20px]">สถานที่: ห้องทำงาน</div>
-                <div class="py-[7px] pl-[20px]">แบรนด์: LC</div>
-                <div class="py-[7px] pl-[20px]">รายละเอียด: ตำแหน่ง</div>
-                <div class="py-[7px] pl-[20px]">ร้านค้า: Shopee คลิก</div>
-                <div class="py-[7px] pl-[20px]">วันที่ซื้อ: 15/05/2023</div>
-                <div class="py-[7px] pl-[20px]">ราคา:1,500 บาท</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -528,61 +437,13 @@
         </div>
       </div>
     </div>
-
-    <div class="grid grid-cols-12" >
-      <div class="col-span-2">
-        <div class="grid grid-cols-5">
-          <div class="col-span-4">
-            <div class="bg-[#FFFFFF] h-[400px] px-[15px] py-[15px]">
-              <div class="bg-[#CFCFCF] px-[50px] py-[35px]">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 87 82"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="86"
-                    height="80.3137"
-                    fill="white"
-                    stroke="#B6B6B6"
-                  />
-                  <path
-                    d="M34.6863 40.3726H52.8824M43.7843 31.2745V49.4706"
-                    stroke="#B6B6B6"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <div class="overflow-auto h-[200px] custom-scrollbar">
-                <div class="py-[7px] pl-[20px] text-center text-[20px]">
-                  ปลั๊กสามตา
-                </div>
-                <div class="py-[7px] pl-[20px]" v-if="selectedViweitem">ผู้ใช้งาน: {{ selectedViweitem.title }}</div>
-                <div class="py-[7px] pl-[20px]">สถานที่: ห้องทำงาน</div>
-                <div class="py-[7px] pl-[20px]">แบรนด์: LC</div>
-                <div class="py-[7px] pl-[20px]">รายละเอียด: ตำแหน่ง</div>
-                <div class="py-[7px] pl-[20px]">ร้านค้า: Shopee คลิก</div>
-                <div class="py-[7px] pl-[20px]">วันที่ซื้อ: 15/05/2023</div>
-                <div class="py-[7px] pl-[20px]">ราคา:1,500 บาท</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
   <ModaladdEquipment v-if="status === 1" @close="ModaladdEquipmentClose" />
 </template>
 
 <script setup>
-import { ref, computed  } from "vue";
-import { useStore } from 'vuex';
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 
 const status = ref(0);
 const store = useStore();
@@ -602,17 +463,29 @@ const ModaladdEquipmentClose = () => {
   emits("ModaladdEquipmentClose");
 };
 
+const baseUrl =
+  "https://raw.githubusercontent.com/vueComponent/ant-design-vue/main/components/carousel/demo/";
 
+const getImgUrl = (i) => {
+  return `${baseUrl}abstract0${i + 1}.jpg`;
+};
 </script>
 <style scoped>
-.long-name {
-  padding-right: 1px;
-  display: inline-block;
-  white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
-  overflow: hidden; /* ซ่อนเนื้อหาที่เกินขนาด */
-  text-overflow: ellipsis; /* แสดง ... เมื่อเนื้อหาเกินขนาด */
-  max-width: calc(
-    100% - 1px
-  ); /* กำหนดความกว้างสูงสุดที่เพื่อป้องกันข้อความบางส่วนหายไป */
+:deep(.slick-dots) {
+  position: relative;
+  height: auto;
+}
+
+:deep(.slick-thumb) {
+  bottom: 0px;
+}
+:deep(.slick-thumb li) {
+  width: 40px;
+  height: 30px;
+}
+:deep(.slick-thumb li img) {
+  width: hide;
+  height: hide;
+  display: block;
 }
 </style>
