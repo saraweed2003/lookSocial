@@ -1,28 +1,47 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { items } from "./itemsD";
+import { useStore } from "vuex";
 
-console.log(items.value);
+const store = useStore();
 
-// ข้อมูลแสดงต่อหน้า
-const pageSize = ref(10);
-const currentPage = ref(1);
-// จำนวนรายการทั้งหมด
-const totalItems = ref(10);
+onMounted(async () => {
+  await store.dispatch("fetchAsset");
+});
+
+const assets = computed(() => store.getters.getAsset);
+console.log("Asset:", assets);
+
+const pageSize = ref(10); // ข้อมูลแสดงต่อหน้า
+const currentPage = ref(1); // หน้าปัจจุบัน
+const totalItems = ref(10); // จำนวนรายการทั้งหมด
 
 // คำนวณรายการที่ต้องการแสดงในแต่ละหน้า
 const displayedItems = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
-  return items.value.slice(start, end);
+  return assets.value.slice(start, end);
 });
 
 // เมื่อมีการเปลี่ยนขนาดหน้า
-const onShowSizeChange = (current, size) => {
+const onShowSizeChange = (currentPage, size) => {
   pageSize.value = size;
   currentPage.value = 1;
-  displayedItems.value = items.value.slice(0, size);
+  displayedItems.value = assets.value.slice(0, size);
 };
+
+function formatDate(dateString) {
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
+  const date = new Date(dateString);
+  return date.toLocaleString("en-UK", options);
+}
 </script>
 
 <template>
@@ -46,7 +65,6 @@ const onShowSizeChange = (current, size) => {
           v-for="item in displayedItems"
           :key="item"
         >
-          <!-- <div class="col-span-1 p-[16px]">{{ item.id }}</div> -->
           <div class="col-span-1 p-[16px]">
             <img class="w-[60px] h-full rounded" :src="item.image" alt="" />
           </div>
@@ -58,7 +76,7 @@ const onShowSizeChange = (current, size) => {
               สี {{ item.color }}, {{ item.detail }}
             </div>
           </div>
-          <div class="col-span-2 p-[16px]">{{ item.brands }}</div>
+          <div class="col-span-2 p-[16px]">{{ item.brand.name }}</div>
           <div class="col-span-2 flex p-[16px] text-center">
             <div
               v-if="item.status === 'create'"
@@ -76,7 +94,7 @@ const onShowSizeChange = (current, size) => {
 
           <div class="col-span-1 p-[16px]">{{ item.username_update }}</div>
           <div class="col-span-2 p-[16px] text-gray-800 group">
-            {{ item.created_At }}
+            {{ formatDate(item.created_at) }}
             <p
               class="text-[16px] text-green-600 invisible group-hover:visible bg-gray-200 px-[5px] rounded absolute"
             >
@@ -85,7 +103,7 @@ const onShowSizeChange = (current, size) => {
           </div>
 
           <div class="col-span-2 p-[16px] text-gray-800">
-            {{ item.updated_At }}
+            {{ formatDate(item.updated_at) }}
             <p
               class="text-[16px] text-[#FF9922] invisible group-hover:visible bg-gray-200 px-[5px] rounded absolute"
             >
@@ -109,4 +127,3 @@ const onShowSizeChange = (current, size) => {
 </template>
 
 <style lang="scss" scoped></style>
-
