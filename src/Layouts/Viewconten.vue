@@ -1,11 +1,12 @@
 <template>
-  <div class="bg-[#F0F2F5] h-full p-[20px] bg-no-repeat font-Kanit">
+  <div class="h-full p-[20px] bg-no-repeat font-Kanit">
     <div>
       <HeaderEquipment />
     </div>
     <div>
       <router-view />
     </div>
+  
     <ContenEquipment />
   </div>
 </template>
