@@ -112,28 +112,33 @@
     <div class="col-start-9 col-span-2">
       <div class="grid grid-cols-11">
         <div class="col-span-3 flex items-center">แบรนด์ :</div>
-        <select class="col-span-8">
-          <option hidden>เลือกสแบรนด์</option>
-          <option value="">LG</option>
-          <option value="">LG</option>
-          <option value="">LG</option>
+
+        <select
+          class="col-span-8 border border-black-500"
+          v-if="selectedViweitem"
+        >
+          <option hidden>เลือกแบรนด์</option>
+          <option value="">{{ selectedViweitem.brand.name }}</option>
         </select>
       </div>
     </div>
     <div class="col-span-2">
       <div class="grid grid-cols-11">
         <div class="col-span-3 flex items-center">สถานที่ :</div>
-        <select class="col-span-8">
+        <select
+          class="col-span-8 border border-black-500"
+          v-if="selectedViweitem"
+        >
           <option hidden>เลือกสถานที่</option>
-          <option value="">LG</option>
-          <option value="">LG</option>
-          <option value="">LG</option>
+          <option value="">{{ selectedViweitem.name }}</option>
         </select>
       </div>
     </div>
   </div>
   <div class="border-[#CFCFCF] border-b"></div>
-  <div class="text-[30px] pt-[10px]">{{ selectedViweitem.category.name }}</div>
+  <div class="text-[30px] pt-[10px]" v-if="selectedViweitem">
+    {{ selectedViweitem.category.name }}
+  </div>
   <!-- ---------------------------- -->
 
   <div class="">
@@ -194,12 +199,11 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center">
-      <div
-        class="col-span-2 drop-shadow-xl pb-5"
-        v-for="prodselectedViweitemsuct in selectedViweitem.type"
-        :key="prodselectedViweitemsuct.id"
-      >
+    <div
+      class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center"
+      v-if="selectedViweitem.status === 'usable'"
+    >
+      <div class="col-span-2 drop-shadow-xl pb-5" v-if="selectedViweitem">
         <div class="grid grid-cols-4">
           <div class="col-span-4">
             <div class="bg-[#FFFFFF] w-full h-full px-[15px] py-[15px]">
@@ -217,42 +221,36 @@
               </div>
               <div class="overflow-auto h-[170px] custom-scrollbar">
                 <div class="py-[7px] pl-[20px] text-center text-[20px]">
-                  {{ prodselectedViweitemsuct.name }}
+                  {{ selectedViweitem.model.name }}
                 </div>
-                <div
+                <!-- <div
       class="py-[7px] pl-[20px] text-center text-[20px]"
       v-for="(img, index) in selectedViweitem.type"
       :key="index"
     >
       <img :src="img.image" alt="Image" />
-    </div>
+    </div> -->
 
+                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน:</div>
+                <div class="py-[7px] pl-[20px]">สถานที่:</div>
                 <div class="py-[7px] pl-[20px]">
-                  ผู้ใช้งาน: {{ prodselectedViweitemsuct.user }}
+                  แบรนด์: {{ selectedViweitem.model.brand.name }}
                 </div>
+                <div class="py-[7px] pl-[20px]">รายละเอียด:</div>
                 <div class="py-[7px] pl-[20px]">
-                  สถานที่: {{ prodselectedViweitemsuct.location }}
-                </div>
-                <div class="py-[7px] pl-[20px]">
-                  แบรนด์: {{ prodselectedViweitemsuct.brand }}
-                </div>
-                <div class="py-[7px] pl-[20px]">
-                  รายละเอียด: {{ prodselectedViweitemsuct.comment }}
-                </div>
-                <div class="py-[7px] pl-[20px]">
-                  ร้านค้า: {{ prodselectedViweitemsuct.shop }}
+                  ร้านค้า: {{ selectedViweitem.store }}
                   <a
                     target="_blank"
                     class="text-blue-500"
-                    :href="prodselectedViweitemsuct.shopurl"
+                    :href="selectedViweitem.store_link"
                     >คลิก</a
                   >
                 </div>
                 <div class="py-[7px] pl-[20px]">
-                  วันที่ซื้อ: {{ prodselectedViweitemsuct.datebuy }}
+                  วันที่ซื้อ: {{ selectedViweitem.created_at }}
                 </div>
                 <div class="py-[7px] pl-[20px]">
-                  ราคา:{{ prodselectedViweitemsuct.price }}
+                  ราคา:{{ selectedViweitem.amount }}
                 </div>
               </div>
             </div>
@@ -319,6 +317,66 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center"
+      v-if="selectedViweitem.status === 'unusable'"
+    >
+      <div class="col-span-2 drop-shadow-xl pb-5" v-if="selectedViweitem">
+        <div class="grid grid-cols-4">
+          <div class="col-span-4">
+            <div class="bg-[#FFFFFF] w-full h-full px-[15px] py-[15px]">
+              <div class="bg-[#FFFFFF]">
+                <a-carousel arrows dots-class="slick-dots slick-thumb">
+                  <template #customPaging="props">
+                    <a>
+                      <img :src="getImgUrl(props.i)" />
+                    </a>
+                  </template>
+                  <div v-for="item in 4" :key="item">
+                    <img :src="getImgUrl(item - 1)" />
+                  </div>
+                </a-carousel>
+              </div>
+              <div class="overflow-auto h-[170px] custom-scrollbar">
+                <div class="py-[7px] pl-[20px] text-center text-[20px]">
+                  {{ selectedViweitem.model.name }}
+                </div>
+                <!-- <div
+      class="py-[7px] pl-[20px] text-center text-[20px]"
+      v-for="(img, index) in selectedViweitem.type"
+      :key="index"
+    >
+      <img :src="img.image" alt="Image" />
+    </div> -->
+
+                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน:</div>
+                <div class="py-[7px] pl-[20px]">สถานที่:</div>
+                <div class="py-[7px] pl-[20px]">
+                  แบรนด์: {{ selectedViweitem.model.brand.name }}
+                </div>
+                <div class="py-[7px] pl-[20px]">รายละเอียด:</div>
+                <div class="py-[7px] pl-[20px]">
+                  ร้านค้า: {{ selectedViweitem.store }}
+                  <a
+                    target="_blank"
+                    class="text-blue-500"
+                    :href="selectedViweitem.store_link"
+                    >คลิก</a
+                  >
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  วันที่ซื้อ: {{ selectedViweitem.created_at }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  ราคา:{{ selectedViweitem.amount }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- ---------------------------- -->
 
@@ -376,6 +434,66 @@
               fill="#CFCFCF"
             />
           </svg>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center"
+      v-if="selectedViweitem.status === 'stock'"
+    >
+      <div class="col-span-2 drop-shadow-xl pb-5" v-if="selectedViweitem">
+        <div class="grid grid-cols-4">
+          <div class="col-span-4">
+            <div class="bg-[#FFFFFF] w-full h-full px-[15px] py-[15px]">
+              <div class="bg-[#FFFFFF]">
+                <a-carousel arrows dots-class="slick-dots slick-thumb">
+                  <template #customPaging="props">
+                    <a>
+                      <img :src="getImgUrl(props.i)" />
+                    </a>
+                  </template>
+                  <div v-for="item in 4" :key="item">
+                    <img :src="getImgUrl(item - 1)" />
+                  </div>
+                </a-carousel>
+              </div>
+              <div class="overflow-auto h-[170px] custom-scrollbar">
+                <div class="py-[7px] pl-[20px] text-center text-[20px]">
+                  {{ selectedViweitem.model.name }}
+                </div>
+                <!-- <div
+      class="py-[7px] pl-[20px] text-center text-[20px]"
+      v-for="(img, index) in selectedViweitem.type"
+      :key="index"
+    >
+      <img :src="img.image" alt="Image" />
+    </div> -->
+
+                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน:</div>
+                <div class="py-[7px] pl-[20px]">สถานที่:</div>
+                <div class="py-[7px] pl-[20px]">
+                  แบรนด์: {{ selectedViweitem.model.brand.name }}
+                </div>
+                <div class="py-[7px] pl-[20px]">รายละเอียด:</div>
+                <div class="py-[7px] pl-[20px]">
+                  ร้านค้า: {{ selectedViweitem.store }}
+                  <a
+                    target="_blank"
+                    class="text-blue-500"
+                    :href="selectedViweitem.store_link"
+                    >คลิก</a
+                  >
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  วันที่ซื้อ: {{ selectedViweitem.created_at }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  ราคา:{{ selectedViweitem.amount }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -437,7 +555,68 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="grid grid-cols-10 gap-[70px] pt-[10px] justify-items-center"
+      v-if="selectedViweitem.status === 'usable'"
+    >
+      <div class="col-span-2 drop-shadow-xl pb-5" v-if="selectedViweitem">
+        <div class="grid grid-cols-4">
+          <div class="col-span-4">
+            <div class="bg-[#FFFFFF] w-full h-full px-[15px] py-[15px]">
+              <div class="bg-[#FFFFFF]">
+                <a-carousel arrows dots-class="slick-dots slick-thumb">
+                  <template #customPaging="props">
+                    <a>
+                      <img :src="getImgUrl(props.i)" />
+                    </a>
+                  </template>
+                  <div v-for="item in 4" :key="item">
+                    <img :src="getImgUrl(item - 1)" />
+                  </div>
+                </a-carousel>
+              </div>
+              <div class="overflow-auto h-[170px] custom-scrollbar">
+                <div class="py-[7px] pl-[20px] text-center text-[20px]">
+                  {{ selectedViweitem.model.name }}
+                </div>
+                <!-- <div
+      class="py-[7px] pl-[20px] text-center text-[20px]"
+      v-for="(img, index) in selectedViweitem.type"
+      :key="index"
+    >
+      <img :src="img.image" alt="Image" />
+    </div> -->
+
+                <div class="py-[7px] pl-[20px]">ผู้ใช้งาน:</div>
+                <div class="py-[7px] pl-[20px]">สถานที่:</div>
+                <div class="py-[7px] pl-[20px]">
+                  แบรนด์: {{ selectedViweitem.model.brand.name }}
+                </div>
+                <div class="py-[7px] pl-[20px]">รายละเอียด:</div>
+                <div class="py-[7px] pl-[20px]">
+                  ร้านค้า: {{ selectedViweitem.store }}
+                  <a
+                    target="_blank"
+                    class="text-blue-500"
+                    :href="selectedViweitem.store_link"
+                    >คลิก</a
+                  >
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  วันที่ซื้อ: {{ selectedViweitem.created_at }}
+                </div>
+                <div class="py-[7px] pl-[20px]">
+                  ราคา:{{ selectedViweitem.amount }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- ---------------------------- -->
   <ModaladdEquipment v-if="status === 1" @close="ModaladdEquipmentClose" />
 </template>
 
