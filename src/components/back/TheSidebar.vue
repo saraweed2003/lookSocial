@@ -1,13 +1,17 @@
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+onMounted(async () => {
+  await store.dispatch("fetchCategory");
+});
+
+const assets = computed(() => store.getters.getCategory);
+// console.log("category:", assets);
 
 const isOpen = ref();
-const activeClass = ref(
-  "bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100"
-);
-const inactiveClass = ref(
-  "border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
-);
 
 const state = reactive({
   activeButton: null,
@@ -27,6 +31,21 @@ onMounted(() => {
     state.activeButton = parseInt(storedButton);
   }
 });
+
+const viewCategory = (category) => {
+  store.dispatch("setSelectedCategory", category);
+};
+
+const menu1Visible = ref(false);
+const menu2Visible = ref(false);
+
+const showMenu1 = (flag) => {
+  menu1Visible.value = flag;
+};
+
+const showMenu2 = (flag) => {
+  menu2Visible.value = flag;
+};
 </script>
 
 <template>
@@ -41,7 +60,7 @@ onMounted(() => {
 
     <div
       :class="isOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-      class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-white lg:translate-x-0 lg:static lg:inset-0"
+      class="fixed inset-y-0 left-0 z-30 w-64 transition duration-300 transform bg-white lg:translate-x-0 lg:static lg:inset-0"
     >
       <!------------------------------------------------------------------ Logo ------------------------------------------------------------------>
       <div class="flex items-center justify-center mt-8">
@@ -69,30 +88,95 @@ onMounted(() => {
       <!----------------------------------------------------------------- Navbar ----------------------------------------------------------------->
       <div class="">
         <nav
-          class="mt-10 px-[10px] border-y overflow-y-auto min-h-[80vh] custom-scrollbar"
+          class="mt-10 px-[10px] border-y overflow-y-auto h-[810px] custom-scrollbar"
         >
           <router-link
             class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
             :class="{ active: isButtonActive(1) }"
-            @click="handleButtonClick(1), (isOpen = !isOpen)"
+            @click="handleButtonClick(1)"
             to="/dashboard"
           >
             <span class="mx-4">หน้าหลัก</span>
           </router-link>
 
-          <router-link
-            class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
-            :class="{ active: isButtonActive(2) }"
-            @click="handleButtonClick(2), (isOpen = !isOpen)"
-            to="/storage"
-          >
-            <span class="mx-4">ห้องเก็บของ</span>
-          </router-link>
+          <div>
+            <div @click="showMenu1(!menu1Visible)">
+              <button
+                class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px] w-full"
+                :class="{ active: isButtonActive(2) }"
+                @click="handleButtonClick(2)"
+              >
+                <span class="mx-4">ห้องเก็บของ</span>
+                <svg
+                  id="icon1"
+                  class="transform rotate-180"
+                  :class="{ 'rotate-0': menu1Visible }"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18 15L12 9L6 15"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div v-for="item in assets" :key="item">
+              <div
+                v-if="menu1Visible"
+                id="menu1"
+                class="bg-gray-200 border-b rounded p-[5px]"
+              >
+                <div
+                  class="flex items-center px-6 py-2 hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+                  @click="showMenu2(!menu2Visible)"
+                >
+                  <span class="ml-4">{{ item.type.name }}</span>
+                  <svg
+                    id="icon2"
+                    class="transform rotate-180"
+                    :class="{ 'rotate-0': menu2Visible }"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M18 15L12 9L6 15"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+
+                <div v-if="menu2Visible" id="menu2">
+                  <router-link
+                    id="menu2"
+                    @click="viewCategory(item)"
+                    class="flex items-center px-6 py-2 hover:bg-[#184BCE] hover:text-white rounded-[6px]"
+                    to="/view-category"
+                  >
+                    <span class="mx-6">- {{ item.name }}</span>
+                  </router-link>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <router-link
             class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
             :class="{ active: isButtonActive(3) }"
-            @click="handleButtonClick(3), (isOpen = !isOpen)"
+            @click="handleButtonClick(3)"
             to="/meeting_room"
           >
             <span class="mx-4">ห้องประชุม</span>
@@ -101,7 +185,7 @@ onMounted(() => {
           <router-link
             class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
             :class="{ active: isButtonActive(4) }"
-            @click="handleButtonClick(4), (isOpen = !isOpen)"
+            @click="handleButtonClick(4)"
             to="/office"
           >
             <span class="mx-4">ห้องทำงาน</span>
@@ -110,7 +194,7 @@ onMounted(() => {
           <router-link
             class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
             :class="{ active: isButtonActive(5) }"
-            @click="handleButtonClick(5), (isOpen = !isOpen)"
+            @click="handleButtonClick(5)"
             to="/parking"
           >
             <span class="mx-4">ที่จอดรถ</span>
@@ -119,7 +203,7 @@ onMounted(() => {
           <router-link
             class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
             :class="{ active: isButtonActive(6) }"
-            @click="handleButtonClick(6), (isOpen = !isOpen)"
+            @click="handleButtonClick(6)"
             to="/restaurant"
           >
             <span class="mx-4">ร้านอาหาร</span>
@@ -128,7 +212,7 @@ onMounted(() => {
           <router-link
             class="flex items-center px-6 py-2 mt-[10px] hover:bg-[#184BCE] hover:text-white rounded-[6px]"
             :class="{ active: isButtonActive(7) }"
-            @click="handleButtonClick(7), (isOpen = !isOpen)"
+            @click="handleButtonClick(7)"
             to="/dining_place"
           >
             <span class="mx-4">ที่รับประทานอาหาร</span>
@@ -142,7 +226,7 @@ onMounted(() => {
           to="/category"
           class="bg-white flex items-center space-x-4 px-10 py-2 fill-black hover:fill-white hover:bg-[#184BCE] hover:text-white rounded-[5px]"
           :class="{ active: isButtonActive(10) }"
-          @click="handleButtonClick(10), (isOpen = !isOpen)"
+          @click="handleButtonClick(10)"
         >
           <svg
             class="h-6 w-6"

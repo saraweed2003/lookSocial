@@ -10,6 +10,9 @@ export default createStore({
 
     //#region ------------------- Look Back ------------------- //
     asset: [],
+    categorys: [],
+    Vcategory: [],
+    username: [],
     //#endregion ---------------- Look Back -------------------
   },
   mutations: {
@@ -23,6 +26,18 @@ export default createStore({
     SET_ASSET(state, asset) {
       state.asset = asset;
     },
+
+    SET_CATEGORY(state, categorys) {
+      state.categorys = categorys;
+    },
+    SET_SELECTED_CATEGORY(state, categorys) {
+      state.Vcategory = categorys;
+    },
+
+    SET_USERNAME(state, username) {
+      state.username = username;
+    },
+
     //#endregion ---------------- Look Back -------------------
   },
   actions: {
@@ -41,6 +56,30 @@ export default createStore({
           // console.log(response.data.data);
         });
     },
+
+    // ------------------------- Category -----------------------
+    fetchCategory({ commit }) {
+      axios
+        .get("https://padmeexii.pythonanywhere.com/api/asset/category")
+        .then((response) => {
+          commit("SET_CATEGORY", response.data.data);
+          // console.log("get Categry", response.data.data);
+        });
+    },
+
+    setSelectedCategory({ commit }, category) {
+      commit("SET_SELECTED_CATEGORY", category);
+    },
+
+    // ------------------------- username -----------------------
+    fetchUser({ commit }) {
+      axios
+        .get("https://padmeexii.pythonanywhere.com/api/asset/user")
+        .then((response) => {
+          commit("SET_USERNAME", response.data.data);
+          // console.log("get Username", response.data.data);
+        });
+    },
     //#endregion ---------------- Look Back -------------------
   },
   getters: {
@@ -55,6 +94,16 @@ export default createStore({
       return state.asset;
     },
 
+    getCategory(state) {
+      return state.categorys;
+    },
+    getSelectedCategory(state) {
+      return state.Vcategory;
+    },
+
+    getUsername(state) {
+      return state.username;
+    },
     //#endregion ---------------- Look Back -------------------
   },
 });
