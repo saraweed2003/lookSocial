@@ -61,7 +61,7 @@ function formatDate(dateString) {
 
       <div class="overflow-auto max-h-[60vh] custom-scrollbar">
         <div
-          class="grid grid-cols-12 border-b border-[#F0F0F0] text-left text-xs items-center hover:shadow-[0px_1px_10px_1px_rgba(0,0,0,0.30)] border-l-[5px] border-l-[#1BBE0D] hover:border-l-[10px] rounded-sm"
+          class="grid grid-cols-12 border-b border-[#F0F0F0] text-left text-xs items-center hover:shadow-[0px_1px_10px_1px_rgba(0,0,0,0.30)] rounded-sm"
           v-for="item in displayedItems"
           :key="item"
         >
@@ -79,20 +79,23 @@ function formatDate(dateString) {
           <div class="col-span-2 p-[16px]">{{ item.brand.name }}</div>
           <div class="col-span-2 flex p-[16px] text-center">
             <div
-              v-if="item.status === 'create'"
+              v-if="item.status === 'usable'"
               class="text-[#1BBE0D] bg-green-100 p-[5px] rounded"
             >
-              เพิ่มข้อมูล
+              กำลังใช้งาน
             </div>
-            <div v-if="item.status === 'update'" class="text-[#FF9922]">
-              แก้ไขข้อมูล
+            <div v-if="item.status === 'unusable'" class="text-[#FF0000]">
+              ใช้งานไม่ได้
             </div>
-            <div v-if="item.status === 'delete'" class="text-[#FF0000]">
-              ลบข้อมูล
+            <div v-if="item.status === 'stock'" class="text-[#FFD600]">
+              สต็อก
+            </div>
+            <div v-if="item.status === '`other'" class="text-[#DB00FF]">
+              อื่นๆ
             </div>
           </div>
 
-          <div class="col-span-1 p-[16px]">{{ item.username_update }}</div>
+          <div class="col-span-1 p-[16px]">{{ item.users }}</div>
           <div class="col-span-2 p-[16px] text-gray-800 group">
             {{ formatDate(item.created_at) }}
             <p

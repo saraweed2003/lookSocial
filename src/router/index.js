@@ -39,10 +39,17 @@ const router = createRouter({
           component: () => import("../views/menu-sidebar/home.vue"),
         },
         {
-          path: "/storage",
-          name: "storage",
-          component: () => import("../views/menu-sidebar/storage.vue"),
+          path: "/stock",
+          name: "stock",
+          component: () => import("../views/menu-sidebar/stock.vue"),
         },
+        {
+          path: "/view-category",
+          name: "view-category",
+          component: () =>
+            import("../views/menu-sidebar/stock/view-category.vue"),
+        },
+
         {
           path: "/meeting_room",
           name: "meeting",

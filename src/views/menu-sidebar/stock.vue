@@ -1,7 +1,7 @@
 <template>
   <div class="font-bold text-[20px]">ห้องเก็บของ</div>
 
-  <div class="mt-6">
+  <!-- <div class="mt-6">
     <h2 class="text-xl font-semibold leading-tight text-gray-700">
       อุปกรณ์คอมพิวเตอร์
     </h2>
@@ -13,6 +13,17 @@
         :locale="locale"
         class="custom-datepicker"
       />
+    </div>
+  </div> -->
+
+  <div class="pt-[10px]">
+    <div class="grid grid-cols-12 gap-6 text-white text-[20px]">
+      <router-link
+        to="/view-stock"
+        class="col-span-3 p-[20px] bg-blue-500 rounded"
+      >
+        <button>อุปกรณ์คอมพิวเตอร์</button>
+      </router-link>
     </div>
   </div>
 </template>
