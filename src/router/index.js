@@ -7,12 +7,14 @@ import Viewconten from "../Layouts/Viewconten.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    // -------------------------main------------------------------------
     {
       path: "/",
       name: "home",
       meta: { layout: main },
       children: [],
     },
+    // -------------------------home------------------------------------
     {
       path: "/equipment",
       name: "equipment",
