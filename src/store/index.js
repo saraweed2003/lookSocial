@@ -1,11 +1,13 @@
 import { createStore } from "vuex";
 import axios from "axios";
+import { Axioshome } from "../api/homeapi";
 
 export default createStore({
   modules: {},
   state: {
     //#region ------------------- Look Home -------------------
     viweitem: null,
+    apihome: [],
     //#endregion ---------------- Look Home -------------------
 
     //#region ------------------- Look Back ------------------- //
@@ -19,6 +21,10 @@ export default createStore({
     //#region ------------------- Look Home -------------------
     SET_SELECTED_VIWEITEM(state, viweitem) {
       state.viweitem = viweitem;
+    },
+    //api
+    SET_APIHOME(state, apihome) {
+      state.apihome = apihome;
     },
     //#endregion ---------------- Look Home -------------------
 
@@ -45,6 +51,19 @@ export default createStore({
     selectedviweproduct({ commit }, viweitem) {
       commit("SET_SELECTED_VIWEITEM", viweitem);
     },
+    //แสดงข้อมูล API
+    apihomes({ commit }) {
+      Axioshome.get("/asset/type/", {}).then(async (response) => {
+        commit("SET_APIHOME", response.data.data);
+      });
+    },
+    //เพิ่มข้อมูล api
+    createapihome({ commit }) {
+      Axioshome.post("/asset/", {}).then(async (response) => {
+        commit("SET_CREATEA", response.data.data);
+      });
+    },
+
     //#endregion ---------------- Look Home -------------------
 
     //#region ------------------- Look Back ------------------- //
@@ -86,6 +105,10 @@ export default createStore({
     //#region ------------------- Look Home -------------------
     getSelecteviweitem(state) {
       return state.viweitem;
+    },
+    //apihome
+    getapihome(state) {
+      return state.apihome;
     },
     //#endregion ---------------- Look Home -------------------
 

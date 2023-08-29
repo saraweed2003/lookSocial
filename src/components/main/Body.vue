@@ -32,35 +32,30 @@
       </div>
     </div>
     <div class="grid grid-cols-12 col-start-4 text-[16px] pt-[5px]">
-      <div class="col-start-4 col-span-6 grid grid-cols-12">
-        <div class="col-span-3 grid grid-cols-3 py-2">
-          <div class="font-bold">สถานที่</div>
-          <select class="col-span-2">
-            <option value="" hidden>ทั้งหมด</option>
-            <option value="">ออฟฟิศ</option>
-            <option value="">ห้องเก็บของ</option>
-          
-          </select>
-        </div>
-        <div class="col-span-3 grid grid-cols-3 pl-[10px] py-2">
-          <div class="font-bold">อุปกรณ์</div>
-          <select class="col-span-2">
-            <option value="" hidden>ทั้งหมด</option>
-            <option value="">คอมพิวเตอร์</option>
-            <option value="">โต๊ะ</option>
-          </select>
-        </div>
-        <div class="col-span-3 grid grid-cols-3 pl-[10px] py-2">
-          <div class="font-bold">แบรนด์</div>
-          <select class="col-span-2">
-            <option value="" hidden>ทั้งหมด</option>
-            <option value="">LG</option>
-            <option value="">AOC</option>
-          </select>
+      <div class="col-start-4 col-span-6 grid grid-cols-12 gap-2.5">
+        <div class="text-center" v-for="items in testapi" :key="items.id">
+          <router-link to="/equipment" @click="viewitem(items)">
+            {{ items.type.name }}
+          </router-link>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+onMounted(async () => {
+  await store.dispatch("apihomes");
+});
+
+const testapi = computed(() => store.getters.getapihome);
+
+const viewitem = (viweitem) => {
+  store.dispatch("selectedviweproduct", viweitem);
+};
+</script>
