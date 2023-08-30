@@ -35,7 +35,7 @@
       <div class="col-start-4 col-span-6 grid grid-cols-12 gap-2.5">
         <div class="text-center" v-for="items in testapi" :key="items.id">
           <router-link to="/equipment" @click="viewitem(items)">
-            {{ items.type.name }}
+            {{ items.name }}
           </router-link>
         </div>
       </div>

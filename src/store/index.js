@@ -58,10 +58,13 @@ export default createStore({
       });
     },
     //เพิ่มข้อมูล api
-    createapihome({ commit }) {
-      Axioshome.post("/asset/", {}).then(async (response) => {
-        commit("SET_CREATEA", response.data.data);
-      });
+    async createapihome({ commit }, { name, type }) {
+      try {
+        const response = await Axioshome.post("/asset/category/create/", { name, type });
+        commit("UPDATE_DATA", response.data.data); 
+      } catch (error) {
+        console.error("Error adding name:", error);
+      }
     },
 
     //#endregion ---------------- Look Home -------------------
