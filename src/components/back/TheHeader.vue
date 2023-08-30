@@ -1,15 +1,16 @@
 <script setup>
+import userD from "./modal/user.vue";
+
 import { ref, computed, onMounted } from "vue";
-import userD from "./user/user.vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 
-onMounted(async () => {
-  await store.dispatch("fetchUser");
-});
+// onMounted(async () => {
+//   await store.dispatch("fetchUser");
+// });
 
-const users = computed(() => store.getters.getUsername);
+// const users = computed(() => store.getters.getUsername);
 // console.log("User : ", users);
 
 const status = ref(0);
@@ -59,18 +60,16 @@ const emits = defineEmits(["close"]);
         </span>
 
         <div class="w-32 pl-[90px] pr-[5px] text-indigo-600 rounded-md sm:w-64">
-          <!-- <a-select defaultValue="ชื่อผู้ใช้งาน" style="width: 100%">
-            <a-select-option value="user.name" v-for="user in users" :key="user.id">
-              {{ user.name }}
-            </a-select-option>
-          </a-select> -->
+          <a-select defaultValue="ชื่อผู้ใช้งาน" style="width: 100%">
+            <a-select-option value="user.name"> g </a-select-option>
+          </a-select>
 
-          <select name="" id="">
+          <!-- <select name="" id="">
             <option selected hidden value="">ผู้ใช้งาน</option>
-            <option value="" v-for="user in users" :key="user.id">
-              {{ user.name }}
+            <option value="">
+           
             </option>
-          </select>
+          </select> -->
         </div>
       </div>
       <div class="ml-[10px]">

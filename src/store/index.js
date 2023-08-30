@@ -12,8 +12,13 @@ export default createStore({
 
     //#region ------------------- Look Back ------------------- //
     asset: [],
+
     categorys: [],
     Vcategory: [],
+
+    types: [],
+    Vtype: [],
+
     username: [],
     //#endregion ---------------- Look Back -------------------
   },
@@ -29,17 +34,32 @@ export default createStore({
     //#endregion ---------------- Look Home -------------------
 
     //#region ------------------- Look Back ------------------- //
+
+    // asset ==================================================
     SET_ASSET(state, asset) {
       state.asset = asset;
     },
 
+    // category ===============================================
     SET_CATEGORY(state, categorys) {
+      state.categorys = categorys;
+    },
+    ADD_CATEGORY(state, categorys) {
       state.categorys = categorys;
     },
     SET_SELECTED_CATEGORY(state, categorys) {
       state.Vcategory = categorys;
     },
 
+    // type ===================================================
+    SET_TYPE(state, types) {
+      state.types = types;
+    },
+    SET_SELECTED_TYPE(state, types) {
+      state.Vtype = types;
+    },
+
+    // user ===================================================
     SET_USERNAME(state, username) {
       state.username = username;
     },
@@ -53,7 +73,7 @@ export default createStore({
     },
     //แสดงข้อมูล API
     apihomes({ commit }) {
-      Axioshome.get("/asset/type/", {}).then(async (response) => {
+      Axioshome.get("/asset/type/").then(async (response) => {
         commit("SET_APIHOME", response.data.data);
       });
     },
@@ -71,36 +91,56 @@ export default createStore({
 
     //#region ------------------- Look Back ------------------- //
     fetchAsset({ commit }) {
-      axios
-        .get("https://padmeexii.pythonanywhere.com/api/asset/")
-        .then((response) => {
-          commit("SET_ASSET", response.data.data);
-          // console.log(response.data.data);
-        });
+      Axioshome.get("/asset/").then((response) => {
+        commit("SET_ASSET", response.data.data);
+        // console.log(response.data.data);
+      });
     },
 
     // ------------------------- Category -----------------------
     fetchCategory({ commit }) {
-      axios
-        .get("https://padmeexii.pythonanywhere.com/api/asset/category")
-        .then((response) => {
-          commit("SET_CATEGORY", response.data.data);
-          // console.log("get Categry", response.data.data);
-        });
+      Axioshome.get("/asset/category/").then((response) => {
+        commit("SET_CATEGORY", response.data.data);
+        // console.log("get Categry", response.data.data);
+      });
+    },
+
+    async postCategory({ commit }, categorData) {
+      try {
+        const response = await Axioshome.post(
+          "/asset/category/create/",
+          categorData
+        );
+        commit("ADD_CATEGORY", response.data.data);
+        return response.data.data;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
     },
 
     setSelectedCategory({ commit }, category) {
       commit("SET_SELECTED_CATEGORY", category);
     },
-
+    // ------------------------- type -----------------------
+    fetchType({ commit }) {
+      Axioshome.get("/asset/type/").then((response) => {
+        commit("SET_TYPE", response.data.data);
+        // console.log("get Username", response.data.data);
+      });
+    },
+    fetchUser({ commit }) {
+      Axioshome.get("/asset/type/").then((response) => {
+        commit("SET_USERNAME", response.data.data);
+        // console.log("get Username", response.data.data);
+      });
+    },
     // ------------------------- username -----------------------
     fetchUser({ commit }) {
-      axios
-        .get("https://padmeexii.pythonanywhere.com/api/asset/user")
-        .then((response) => {
-          commit("SET_USERNAME", response.data.data);
-          // console.log("get Username", response.data.data);
-        });
+      Axioshome.get("/asset/user/").then((response) => {
+        commit("SET_USERNAME", response.data.data);
+        // console.log("get Username", response.data.data);
+      });
     },
     //#endregion ---------------- Look Back -------------------
   },
@@ -120,11 +160,20 @@ export default createStore({
       return state.asset;
     },
 
+    // category ===============================================
     getCategory(state) {
       return state.categorys;
     },
     getSelectedCategory(state) {
       return state.Vcategory;
+    },
+
+    // type ===================================================
+    getType(state) {
+      return state.types;
+    },
+    getSelectedType(state) {
+      return state.Vtype;
     },
 
     getUsername(state) {
