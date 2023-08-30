@@ -10,8 +10,8 @@ import Header from "../components/back/TheHeader.vue";
     <div class="flex-1 flex flex-col overflow-hidden">
       <Header />
 
-      <main class="flex-1 overflow-x-hidden overflow-y-auto custom-scrollbar">
-        <div class="p-[30px]">
+      <main class="flex-1 overflow-x-hidden">
+        <div class="p-[30px] overflow-auto custom-scrollbar">
           <!-- <slot /> -->
           <router-view></router-view>
         </div>
