@@ -12,7 +12,10 @@
             <div class="grid grid-cols-4">
               <div class="py-[25px] px-[40px] col-span-2">
                 <div>
-                  <img :src="items.image" class="w-full h-[110px]" />
+                  <img
+                    :src="`https://padmeexii.pythonanywhere.com${items.image}`"
+                    class="w-full h-[110px]"
+                  />
                 </div>
               </div>
               <div
@@ -20,7 +23,6 @@
               >
                 <div class="row-span-4 flex items-center">
                   {{ items.name }}
-                  {{ items.image }}
                 </div>
                 <div class="grid grid-cols-5">
                   <div class="group static col-start-5">
@@ -57,15 +59,15 @@
           </div>
           <div
             class="overflow-auto h-[240px] custom-scrollbar grid grid-cols-1 py-[5px]"
-            v-for="items in testapi.categories"
-            :key="items.id"
           >
             <router-link
-              @click="viewitem(items)"
+              v-for="category in items.categories"
+              :key="category.id"
+              @click="viewitem(category)"
               class="py-[7px] pl-[20px] text-start hover:bg-[#184BCE] hover:text-[white]"
               to="/equipment"
             >
-              {{ items.name }}
+              {{ category.name }}
             </router-link>
           </div>
         </div>
@@ -91,7 +93,7 @@ onMounted(async () => {
 });
 
 const testapi = computed(() => store.getters.getapihome);
-console.log(testapi.categories);
+console.log("หน้าบ้าน", testapi);
 
 const viewitem = (viweitem) => {
   store.dispatch("selectedviweproduct", viweitem);

@@ -4,28 +4,35 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
+const names = computed(() => store.getters.getSelecteviweitem);
+
+onMounted(() => {
+  store.dispatch("apihomes"); // Dispatch action to fetch names from API
+});
+
+console.log(names);
 const name = ref("");
 const editing = ref(false);
 const editIndex = ref(null);
 
 const addName = () => {
-  if (name.value.trim() !== "") {
-    names.value.push(name.value);
-    updateLocalStorage();
+  if (name.value.trim() !== "" && names.value) {
+    const newName = {
+      name: name.value,       // Use names.value for the name property
+      type: names.value.id   // Use names.value.type for the type property
+    };
+    store.dispatch("createapihome", newName); // Call the action with the entered name and type
     name.value = "";
   }
 };
 
 const editName = (index) => {
-  name.value = names.value[index];
   editing.value = true;
   editIndex.value = index;
 };
 
 const saveEdit = () => {
   if (editIndex.value !== null && name.value.trim() !== "") {
-    names.value[editIndex.value] = name.value;
-    updateLocalStorage();
     name.value = "";
     editing.value = false;
     editIndex.value = null;
@@ -39,16 +46,13 @@ const clearEdit = () => {
 };
 
 const deleteName = (index) => {
-  names.value.splice(index, 1);
-  updateLocalStorage();
+  store.dispatch("deleteName", index); // Dispatch action to delete name
 };
 
-const updateLocalStorage = () => {
-  localStorage.setItem("names", JSON.stringify(names.value));
-};
+onMounted(() => {
+  store.dispatch("apihomes"); // Dispatch action to fetch names from API
+});
 
-const names = computed(() => store.getters.getSelecteviweitem);
-console.log(names);
 const closeModal = () => {
   emits("close");
 };
@@ -63,9 +67,10 @@ const emits = defineEmits(["close"]);
     <div class="grid col-start-5 col-span-3">
       <div class="grid grid-rows-1 bg-white rounded-lg p-[20px]">
         <div
+        v-if="names"
           class="text-center justify-center items-center text-[20px] font-bold text-black pb-[20px]"
         >
-          ชื่อผู้ใช้งาน
+          {{ names.name }}
         </div>
 
         <!----------------------------- เพิ่มชื่อผู้ใช้งาน ----------------------------->
@@ -74,7 +79,7 @@ const emits = defineEmits(["close"]);
             <input
               v-model="name"
               type="text"
-              placeholder="กรอกชื่อผู้ใช้งาน"
+              placeholder="กรอกอุปกรณ์ที่ต้องการ"
               class="border border-gray-200 rounded p-[8px] w-full"
             />
           </div>
@@ -109,7 +114,7 @@ const emits = defineEmits(["close"]);
 
             <div
               class="grid grid-cols-12 p-[8px]"
-              v-for="(name, index) in names.category"
+              v-for="(name, index) in names.categories"
               :key="index"
             >
               <div class="col-span-10 py-[5px]">{{ name.name }}</div>
